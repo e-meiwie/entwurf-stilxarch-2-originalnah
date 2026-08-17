@@ -1,0 +1,215 @@
+[build]
+  publish = "."
+
+# --------------------------------------------------------------------------
+# Sicherheits-Header. Die CSP ist streng, weil die Seite nichts von fremden
+# Servern laedt - das deckt sich mit der Zusage in der Datenschutzerklaerung.
+# form-action 'none', weil es kein Formular gibt.
+# --------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; form-action 'none'; frame-ancestors 'none'; base-uri 'self'"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/bilder/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# --------------------------------------------------------------------------
+# Weiterleitungen der alten Adressen aus material/seiten.txt.
+# Jede der 30 gecrawlten Adressen hat hier ein Ziel, damit Suchtreffer und
+# Lesezeichen nicht ins Leere laufen.
+# --------------------------------------------------------------------------
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/pages/istart.html"
+  to = "/"
+  status = 301
+
+# Bauen 4.0
+[[redirects]]
+  from = "/pages/bauen40/01-bauen.html"
+  to = "/bauen40.html"
+  status = 301
+[[redirects]]
+  from = "/pages/bauen40/01-ibauenstart.html"
+  to = "/bauen40.html"
+  status = 301
+[[redirects]]
+  from = "/pages/bauen40/02-bauen.html"
+  to = "/bauen40-bck09.html"
+  status = 301
+[[redirects]]
+  from = "/pages/bauen40/02-ibauen.html"
+  to = "/bauen40-bck09.html"
+  status = 301
+[[redirects]]
+  from = "/pages/bauen40/03-bauen.html"
+  to = "/bauen40-shwpk.html"
+  status = 301
+[[redirects]]
+  from = "/pages/bauen40/03-ibauen.html"
+  to = "/bauen40-shwpk.html"
+  status = 301
+[[redirects]]
+  from = "/pages/bauen40/04-bauen.html"
+  to = "/bauen40-arp00.html"
+  status = 301
+[[redirects]]
+  from = "/pages/bauen40/04-ibauen.html"
+  to = "/bauen40-arp00.html"
+  status = 301
+[[redirects]]
+  from = "/pages/bauen40/*"
+  to = "/bauen40.html"
+  status = 301
+
+# Das Buero
+[[redirects]]
+  from = "/pages/01-buero.html"
+  to = "/buero.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/ibuero.html"
+  to = "/buero.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/01-profil.html"
+  to = "/buero-profil.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/iprofil.html"
+  to = "/buero-profil.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/01-mp.html"
+  to = "/buero-pankse.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/imp.html"
+  to = "/buero-pankse.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/01-job.html"
+  to = "/stellenangebot.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/ijobangebot.html"
+  to = "/stellenangebot.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/ijobarch.html"
+  to = "/stellenangebot-architekt.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/ijobbauz.html"
+  to = "/stellenangebot-zeichner.html"
+  status = 301
+[[redirects]]
+  from = "/pages/buero/*"
+  to = "/buero.html"
+  status = 301
+
+# Projekte
+[[redirects]]
+  from = "/pages/02-projekte.html"
+  to = "/projekte.html"
+  status = 301
+[[redirects]]
+  from = "/projekte/iprojekte.html"
+  to = "/projekte.html"
+  status = 301
+[[redirects]]
+  from = "/projekte/*"
+  to = "/projekte.html"
+  status = 301
+
+# Presse
+[[redirects]]
+  from = "/pages/03-presse.html"
+  to = "/presse.html"
+  status = 301
+[[redirects]]
+  from = "/pages/ipresse.html"
+  to = "/presse.html"
+  status = 301
+[[redirects]]
+  from = "/pages/presse/*"
+  to = "/presse.html"
+  status = 301
+
+# Kunden
+[[redirects]]
+  from = "/pages/04-kunden.html"
+  to = "/kunden.html"
+  status = 301
+[[redirects]]
+  from = "/pages/ikunden.html"
+  to = "/kunden.html"
+  status = 301
+
+# Kontakt
+[[redirects]]
+  from = "/pages/06-kontakt.html"
+  to = "/kontakt.html"
+  status = 301
+[[redirects]]
+  from = "/pages/ikontakt.html"
+  to = "/kontakt.html"
+  status = 301
+
+# Rechtstexte
+[[redirects]]
+  from = "/pages/07-impressum.html"
+  to = "/impressum.html"
+  status = 301
+[[redirects]]
+  from = "/pages/iimpressum.html"
+  to = "/impressum.html"
+  status = 301
+[[redirects]]
+  from = "/pages/08-datensch.html"
+  to = "/datenschutz.html"
+  status = 301
+[[redirects]]
+  from = "/pages/idatensch.html"
+  to = "/datenschutz.html"
+  status = 301
+
+# Der geschuetzte Bereich existiert in diesem Entwurf nicht - siehe README.
+# Die alten Adressen laufen auf die Kontaktseite.
+[[redirects]]
+  from = "/pages/05-login.html"
+  to = "/kontakt.html"
+  status = 301
+[[redirects]]
+  from = "/pages/ilogin.html"
+  to = "/kontakt.html"
+  status = 301
+
+# Auffangregel
+[[redirects]]
+  from = "/pages/*"
+  to = "/"
+  status = 301

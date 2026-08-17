@@ -1,0 +1,645 @@
+/* ==========================================================================
+   STIL x Architektur - Entwurf 2 "originalnah"
+   Farbwelt und Schrift stammen aus der bestehenden Seite (textstil.css):
+   Orange #FF6600, Grau #666666, Weiss, Arial. Geaendert wurde die Technik,
+   nicht die Anmutung.
+   ========================================================================== */
+
+:root {
+  --orange:        #ff6600;   /* Akzent des Bueros, Flaechen und Linien */
+  --orange-text:   #b85100;   /* dieselbe Farbe abgedunkelt: 4.6:1 auf Weiss */
+  --orange-hell:   #fff4ec;
+  --grau:          #666666;   /* Grau der alten Seite, 5.7:1 auf Weiss */
+  --grau-dunkel:   #333333;
+  --grau-hell:     #f4f4f2;
+  --linie:         #d8d8d5;
+  --linie-fein:    #ececea;
+  --weiss:         #ffffff;
+
+  --schrift: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+  --breite: 1080px;
+  --luft: clamp(2.5rem, 6vw, 5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--weiss);
+  color: var(--grau-dunkel);
+  font-family: var(--schrift);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--orange-text); }
+a:hover { color: var(--orange); }
+
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.mitte {
+  width: 100%;
+  max-width: var(--breite);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.sprunglink {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--orange);
+  color: var(--weiss);
+  padding: 0.6rem 1rem;
+  z-index: 100;
+}
+.sprunglink:focus {
+  left: 0;
+  color: var(--weiss);
+}
+
+/* --- Kopf ---------------------------------------------------------------- */
+
+.kopf {
+  border-bottom: 1px solid var(--linie-fein);
+  background: var(--weiss);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.kopf__innen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+}
+
+/* Wortmarke, nachgesetzt aus dem Logo des Bueros:
+   "STIL" grau, das "x" tiefgestellt in Orange, darunter "Architektur". */
+.marke {
+  display: block;
+  text-decoration: none;
+  line-height: 1;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.marke__stil {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--grau);
+}
+.marke__x {
+  color: var(--orange);
+  font-weight: 700;
+  font-size: 1.35rem;
+}
+.marke__zusatz {
+  display: block;
+  text-align: right;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--grau);
+  margin-top: 0.15rem;
+}
+
+.menueknopf {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--linie);
+  background: var(--weiss);
+  color: var(--grau-dunkel);
+  font: inherit;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+}
+.menueknopf__balken,
+.menueknopf__balken::before,
+.menueknopf__balken::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--orange);
+}
+.menueknopf__balken { position: relative; }
+.menueknopf__balken::before,
+.menueknopf__balken::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.menueknopf__balken::before { top: -6px; }
+.menueknopf__balken::after  { top: 6px; }
+
+.hauptmenue__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 0.35rem 1.1rem;
+}
+
+.hauptmenue__link {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--grau);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0;
+  border-bottom: 2px solid transparent;
+}
+.hauptmenue__link:hover { color: var(--grau-dunkel); border-bottom-color: var(--orange); }
+.hauptmenue__link--betont { color: var(--orange-text); font-weight: 700; }
+.hauptmenue__link--betont:hover { color: var(--orange); }
+.hauptmenue__link[aria-current="page"] {
+  color: var(--grau-dunkel);
+  border-bottom-color: var(--orange);
+}
+
+/* --- Untermenue ---------------------------------------------------------- */
+
+.untermenue {
+  border-bottom: 1px solid var(--linie-fein);
+  background: var(--grau-hell);
+}
+.untermenue ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.5rem;
+}
+.untermenue a {
+  display: inline-block;
+  padding: 0.7rem 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: var(--grau);
+  border-bottom: 2px solid transparent;
+}
+.untermenue a:hover { color: var(--grau-dunkel); }
+.untermenue a[aria-current="page"] {
+  color: var(--orange-text);
+  font-weight: 700;
+  border-bottom-color: var(--orange);
+}
+
+/* --- Seitenkopf ---------------------------------------------------------- */
+
+.seitenkopf {
+  padding: var(--luft) 0 1.5rem;
+}
+.seitenkopf__titel {
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--grau-dunkel);
+  margin: 0 0 0.6rem;
+}
+.seitenkopf__titel strong { font-weight: 700; color: var(--orange-text); }
+.seitenkopf__vorspann {
+  max-width: 62ch;
+  color: var(--grau);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* --- Abschnitte ---------------------------------------------------------- */
+
+.abschnitt { padding: 2.5rem 0; }
+.abschnitt--erst { padding-top: 0.5rem; }
+.abschnitt--grau { background: var(--grau-hell); }
+.abschnitt--linie { border-top: 1px solid var(--linie-fein); }
+
+.abschnitt__titel {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--grau-dunkel);
+  margin: 0 0 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--orange);
+  display: inline-block;
+}
+
+.fliess { max-width: 68ch; }
+.fliess--gross { font-size: 1.12rem; color: var(--grau-dunkel); }
+
+h3 { font-size: 1.05rem; letter-spacing: 0.03em; color: var(--grau-dunkel); }
+
+/* --- Startseite ---------------------------------------------------------- */
+
+.leitsatz {
+  padding: clamp(3rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+}
+.leitsatz__titel {
+  margin: 0 0 1.6rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--grau);
+}
+.leitsatz__figur { margin: 0; }
+.leitsatz blockquote {
+  margin: 0;
+  font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--grau-dunkel);
+}
+.leitsatz figcaption {
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+  color: var(--grau);
+}
+
+.diaschau { position: relative; }
+.diaschau__bahn {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(100%, 620px);
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+}
+.diaschau__bild {
+  margin: 0;
+  scroll-snap-align: start;
+}
+.diaschau__bild img { width: 100%; }
+.diaschau__bild figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--grau);
+}
+.diaschau__steuerung {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.25rem;
+}
+.diaschau__knopf {
+  border: 1px solid var(--linie);
+  background: var(--weiss);
+  color: var(--orange-text);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+}
+.diaschau__knopf:hover { border-color: var(--orange); background: var(--orange-hell); }
+
+/* --- Rasterbausteine ----------------------------------------------------- */
+
+.spalten {
+  display: grid;
+  gap: 1.5rem 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.spalten--zwei { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+.karte {
+  border: 1px solid var(--linie-fein);
+  padding: 1.25rem 1.4rem;
+  background: var(--weiss);
+}
+.karte h3 {
+  margin: 0 0 0.7rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--orange-text);
+}
+
+.strichliste { list-style: none; margin: 0; padding: 0; }
+.strichliste li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: 0.45rem;
+}
+.strichliste li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.6rem;
+  height: 2px;
+  background: var(--orange);
+}
+
+.bildpaar {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+figure.bild { margin: 0; }
+figure.bild--abstand { margin-top: 1.75rem; }
+.abstand-oben { margin-top: 1.75rem; }
+figure.bild figcaption {
+  margin-top: 0.55rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--grau);
+}
+
+/* --- Projekte ------------------------------------------------------------ */
+
+.auswahl {
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.auswahl figure { margin: 0; }
+.auswahl figcaption {
+  margin-top: 0.6rem;
+  border-top: 1px solid var(--linie-fein);
+  padding-top: 0.5rem;
+}
+.auswahl .projekt__art {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--orange-text);
+}
+.auswahl .projekt__name {
+  display: block;
+  color: var(--grau-dunkel);
+  font-size: 0.98rem;
+}
+
+/* Die Kacheln der Gesamtuebersicht sind hoechstens so breit wie die
+   vorhandenen Bilder (199 px). Sie werden nie hochskaliert. */
+.uebersicht {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 199px));
+}
+.uebersicht li { max-width: 199px; }
+.uebersicht img {
+  width: 100%;
+  border: 1px solid var(--linie-fein);
+  background: var(--grau-hell);
+}
+.uebersicht__text {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--grau);
+}
+.uebersicht__kuerzel {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--orange-text);
+}
+
+/* --- Kennzahl ------------------------------------------------------------ */
+
+.kennzahl {
+  border-left: 4px solid var(--orange);
+  background: var(--grau-hell);
+  padding: 1.5rem 1.75rem;
+}
+.kennzahl__zahl {
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 5rem);
+  line-height: 1;
+  font-weight: 700;
+  color: var(--orange-text);
+}
+.kennzahl__einheit {
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grau);
+}
+.kennzahl p + p { margin-top: 0.6rem; }
+.kennzahl__besetzung {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--grau);
+}
+
+/* --- Listen: Presse, Kunden, Werdegang ----------------------------------- */
+
+.presseliste { list-style: none; margin: 0; padding: 0; }
+.presseliste li {
+  border-bottom: 1px solid var(--linie-fein);
+  padding: 0.85rem 0;
+  display: grid;
+  gap: 0.15rem 1.5rem;
+  grid-template-columns: 7.5rem 1fr;
+}
+.presseliste__datum {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--orange-text);
+  text-transform: uppercase;
+}
+.presseliste__quelle {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--grau);
+}
+
+.kundenliste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 3 16rem;
+  column-gap: 2.5rem;
+}
+.kundenliste li {
+  break-inside: avoid;
+  padding: 0.28rem 0;
+  font-size: 0.92rem;
+  border-bottom: 1px solid var(--linie-fein);
+}
+
+.werdegang { list-style: none; margin: 0; padding: 0; }
+.werdegang li {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 0.2rem 1.25rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--linie-fein);
+}
+.werdegang__zeit {
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: var(--orange-text);
+  white-space: nowrap;
+}
+
+/* --- Kontakt ------------------------------------------------------------- */
+
+.daten { margin: 0; }
+.daten__paar {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--linie-fein);
+}
+.daten dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--grau);
+  padding-top: 0.15rem;
+}
+.daten dd { margin: 0; }
+
+address { font-style: normal; }
+
+.hinweiskasten {
+  border: 1px solid var(--orange);
+  background: var(--orange-hell);
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+}
+.hinweiskasten p { margin: 0; }
+.hinweiskasten p + p { margin-top: 0.6rem; }
+
+/* --- Rechtstexte --------------------------------------------------------- */
+
+.rechtstext { max-width: 70ch; }
+.rechtstext h2 {
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--grau-dunkel);
+  margin-top: 2.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--linie-fein);
+}
+.rechtstext h3 { margin-top: 1.5rem; font-size: 0.98rem; }
+.rechtstext ul { padding-left: 1.1rem; }
+
+/* --- Fuss ---------------------------------------------------------------- */
+
+.fuss {
+  margin-top: var(--luft);
+  border-top: 3px solid var(--orange);
+  background: var(--grau-hell);
+  padding: 2rem 0 2.5rem;
+  font-size: 0.88rem;
+  color: var(--grau);
+}
+.fuss__innen { display: grid; gap: 0.9rem; }
+.fuss__adresse { margin: 0; }
+.fuss__menue {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+}
+.fuss__menue a {
+  text-decoration: none;
+  color: var(--grau);
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+.fuss__menue a:hover { color: var(--orange-text); }
+.fuss__hinweis {
+  margin: 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--linie);
+  font-size: 0.8rem;
+}
+
+/* --- Schmale Ansicht ----------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .kopf__innen { flex-wrap: wrap; }
+  .menueknopf { display: inline-flex; }
+  .hauptmenue {
+    flex-basis: 100%;
+    display: none;
+  }
+  .hauptmenue[data-offen="ja"] { display: block; }
+  .hauptmenue__liste {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    border-top: 1px solid var(--linie-fein);
+    margin-top: 0.9rem;
+  }
+  .hauptmenue__link {
+    display: block;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--linie-fein);
+  }
+  .hauptmenue__link[aria-current="page"] { border-bottom-color: var(--linie-fein); color: var(--orange-text); }
+}
+
+/* Unter 720 px wird die Wortmarke kleiner, sonst draengt sie den
+   Menueknopf ueber den Rand. */
+@media (max-width: 720px) {
+  .marke__stil { font-size: 1.4rem; }
+  .marke__x { font-size: 1.1rem; }
+  .marke__zusatz { font-size: 0.8rem; }
+  .presseliste li { grid-template-columns: 1fr; }
+  .werdegang li { grid-template-columns: 1fr; }
+  .daten__paar { grid-template-columns: 1fr; gap: 0.1rem; }
+  .kundenliste { columns: 1; }
+}
+
+/* Ohne Javascript bleibt das Menue sichtbar - sonst waere die Seite auf
+   dem Handy unbedienbar. */
+.kein-js .hauptmenue { display: block; }
+.kein-js .menueknopf { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .diaschau__bahn { scroll-behavior: auto; }
+}
+
+@media print {
+  .kopf, .untermenue, .diaschau__steuerung, .sprunglink { display: none; }
+  body { color: #000; }
+}
